@@ -4,7 +4,7 @@
 
 import os
 from typing import Dict, List, Optional, Any, Tuple
-from custom_nodes.agent_nodepack.backend.dao.model_config_dao import get_model_config_dao
+from custom_nodes.comfyui_workflow_agent.backend.dao.model_config_dao import get_model_config_dao
 
 
 class ModelConfigService:
@@ -77,10 +77,10 @@ class ModelConfigService:
     def _parse_model(self, model: str) -> Tuple[str, str]:
         """
         解析model字段，提取provider和model_name
-        
+
         Args:
             model: 格式为"provider:model_name"的字符串
-            
+
         Returns:
             (provider, model_name) 元组
         """

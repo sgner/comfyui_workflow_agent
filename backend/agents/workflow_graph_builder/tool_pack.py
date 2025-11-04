@@ -1,6 +1,6 @@
 import json
-from custom_nodes.agent_nodepack.backend.utils.request_context import get_session_id, get_rewrite_context
-from custom_nodes.agent_nodepack.backend.dao.workflow_table import get_workflow_data
+from custom_nodes.comfyui_workflow_agent.backend.utils.request_context import get_session_id, get_rewrite_context
+from custom_nodes.comfyui_workflow_agent.backend.dao.workflow_table import get_workflow_data
 from langchain.tools import tool
 
 

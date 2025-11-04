@@ -2,7 +2,7 @@ from langchain.agents import create_agent as lca
 from langchain.chat_models import init_chat_model
 import json
 from tool_pack import get_current_workflow
-from custom_nodes.agent_nodepack.backend.service import get_model_config_service
+from custom_nodes.comfyui_workflow_agent.backend.service import get_model_config_service
 from langgraph.checkpoint.memory import InMemorySaver
 
 
