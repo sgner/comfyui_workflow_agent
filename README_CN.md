@@ -1,3 +1,5 @@
+**其他语言版本: [English](README.md), [中文](README_CN.md).**
+
 # Agent workflow helper
 
 一个为ComfyUI设计的智能代理，提供工作流生成、调试、优化和参数测试等功能。

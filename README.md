@@ -1,3 +1,5 @@
+**Read this in other languages: [English](README.md), [中文](README_CN.md).**
+
 # comfy-ui-workflow-agent
 
 An intelligent agent designed for **ComfyUI**, providing workflow generation, debugging, optimization, and parameter testing capabilities.
