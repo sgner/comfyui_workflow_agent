@@ -1,0 +1,44 @@
+/* Base styles for our extension */
+:root {
+  --agent-nodepack-primary-color: #3498db;
+  --agent-nodepack-secondary-color: #2c3e50;
+  --agent-nodepack-text-color: #ecf0f1;
+  --agent-nodepack-accent-color: #e74c3c;
+  --agent-nodepack-bg-color: #34495e;
+  --agent-nodepack-border-color: #7f8c8d;
+  --agent-nodepack-muted-text-color: #95a5a6;
+}
+
+/* Light mode overrides */
+:root.comfy-theme-light #agent-nodepack-root {
+  --agent-nodepack-primary-color: #2980b9;
+  --agent-nodepack-secondary-color: #34495e;
+  --agent-nodepack-text-color: #2c3e50;
+  --agent-nodepack-accent-color: #c0392b;
+  --agent-nodepack-bg-color: #ecf0f1;
+  --agent-nodepack-border-color: #bdc3c7;
+  --agent-nodepack-muted-text-color: #7f8c8d;
+}
+
+/* Make sure our styles don't leak out to the rest of ComfyUI */
+#agent-nodepack-root {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  color: var(--agent-nodepack-text-color);
+}
+
+#agent-nodepack-root * {
+  box-sizing: border-box;
+}
+
+/* Backward compatibility with existing variable names */
+:root {
+  --example-primary-color: var(--agent-nodepack-primary-color);
+  --example-secondary-color: var(--agent-nodepack-secondary-color);
+  --example-text-color: var(--agent-nodepack-text-color);
+  --example-accent-color: var(--agent-nodepack-accent-color);
+  --example-bg-color: var(--agent-nodepack-bg-color);
+  --example-border-color: var(--agent-nodepack-border-color);
+  --example-muted-text-color: var(--agent-nodepack-muted-text-color);
+}
