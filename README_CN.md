@@ -12,6 +12,7 @@
 | 节点参数繁琐     | Node Registry + 自动补全                      |
 | 模型难直接输出    | 只生成结构性指令（DSL）                             |
 | 可维护性差      | 多 Agent 分层协作（Builder / Validator / Fixer） |
+
 让大模型不要生成 JSON，而是生成“构建 JSON 的操作”。
 
 用程序保证结构正确性，用多 Agent 协作保证任务完成度。

@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Plugin to correctly handle the ComfyUI scripts in development mode
 const rewriteComfyImports = ({ isDev }) => {
@@ -26,8 +30,7 @@ const copyLocales = () => {
   return {
     name: "copy-locales",
     writeBundle() {
-      // This runs after bundle is written
-      console.log("Bundle complete, copying locales...");
+      console.log("Bundle complete.");
     }
   };
 };
@@ -38,26 +41,34 @@ export default defineConfig(({ mode }) => ({
     rewriteComfyImports({ isDev: mode === "development" }),
     copyLocales()
   ],
-  publicDir: "public", // Explicitly set public directory
+  publicDir: "public",
   build: {
+    // Output directly to ../web to match __init__.py expectations
+    outDir: '../web',
     emptyOutDir: true,
     rollupOptions: {
-      // Don't bundle ComfyUI scripts - they will be loaded from the ComfyUI server
       external: ['/scripts/app.js', '/scripts/api.js'],
       input: {
         main: path.resolve(__dirname, 'src/main.tsx'),
       },
       output: {
-        // Output to the dist/example_ext directory
-        dir: '../dist',
-        entryFileNames: 'example_ext/[name].js',
-        chunkFileNames: 'example_ext/[name]-[hash].js',
-        assetFileNames: 'example_ext/[name][extname]',
-        // Split React into a separate vendor chunk for better caching
+        // Flat structure: web/main.js
+        entryFileNames: 'main.js',
+        chunkFileNames: '[name]-[hash].js',
+        // Flat structure: web/style.css
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'style.css';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
         manualChunks: {
           'vendor': ['react', 'react-dom'],
         }
       }
     }
+  },
+  define: {
+    'process.env': {}
   }
 }));

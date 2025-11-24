@@ -1,167 +1,297 @@
-import i18n from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
-import { initReactI18next } from 'react-i18next'
 
-// Define fallback translations for debugging
-interface TranslationResource {
-  [language: string]: {
-    [namespace: string]: {
-      app: {
-        title: string
-        description: string
-        noNodes: string
-        nodeList: {
-          title: string
-          id: string
-          type: string
-          category: string
-          inputs: string
-          outputs: string
-        }
-        nodeStats: {
-          title: string
-          totalNodes: string
-          uniqueNodeTypes: string
-        }
-        footer: {
-          clickToHighlight: string
-        }
-        features: {
-          title: string
-          workflowGeneration: string
-          workflowDebugging: string
-          workflowOptimization: string
-          parameterTesting: string
-          nodeSearch: string
-          aiAssistant: string
-        }
-        gettingStarted: {
-          title: string
-          description: string
-          shortcuts: string
-          aiAssistant: string
-        }
-      }
+import { Language } from '../types';
+
+type Translations = {
+    [key in Language]: {
+        [key: string]: string;
     }
-  }
-}
+};
 
-const fallbackResources: TranslationResource = {
-  en: {
-    main: {
-      app: {
-        title: 'React Example Extension (Fallback)',
-        description: 'Shows statistics about nodes in the current workflow',
-        noNodes: 'No nodes in the workflow',
-        nodeList: {
-          title: 'Node List',
-          id: 'ID',
-          type: 'Type',
-          category: 'Category',
-          inputs: 'Inputs',
-          outputs: 'Outputs'
-        },
-        nodeStats: {
-          title: 'Node Statistics',
-          totalNodes: 'Total nodes',
-          uniqueNodeTypes: 'Unique node types'
-        },
-        footer: {
-          clickToHighlight:
-            'Click on any node in the list to highlight it in the workflow'
-        },
-        features: {
-          title: 'Features',
-          workflowGeneration: 'Workflow Generation',
-          workflowDebugging: 'Workflow Debugging',
-          workflowOptimization: 'Workflow Optimization',
-          parameterTesting: 'Parameter Testing',
-          nodeSearch: 'Node Search',
-          aiAssistant: 'AI Assistant'
-        },
-        gettingStarted: {
-          title: 'Getting Started',
-          description:
-            'Use the tabs in the bottom panel to access different features of the Agent Node Pack.',
-          shortcuts:
-            'You can also use keyboard shortcuts to quickly access features:',
-          aiAssistant: 'Open AI Assistant'
-        }
-      }
+export const translations: Translations = {
+    en: {
+        appName: "Comfy Workflow Agent",
+        appSubtitle: "AI Workflow Architect",
+        welcome: "Hello! I'm your Comfy Workflow Agent. I can search for custom nodes, fix errors, and build workflows for you.",
+        inputPlaceholder: "Ex: 'Add a ControlNet node' or 'Search for IPAdapter installation'",
+        thinking: "Thinking & Searching...",
+        groundingSources: "Knowledge Base Sources",
+        missingNodes: "Possible Missing Nodes",
+        suggestedActions: "Suggested Actions",
+        workflowUpdated: "Workflow updated automatically",
+        
+        // Visualizer
+        managerTitle: "Workflow Manager",
+        copyJson: "Copy JSON",
+        exportJson: "Export JSON",
+        copied: "Copied",
+        tabOverview: "Overview",
+        tabDiagnostics: "Diagnostics",
+        tabJson: "JSON Data",
+        statNodes: "Nodes",
+        statLinks: "Links",
+        statIssues: "Issues",
+        workflowHealth: "Workflow Health",
+        noIssues: "No active issues detected.",
+        startDiagnosis: "Run Diagnostics",
+        diagnoseWithAi: "Diagnose with AI",
+        diagnosePrompt: "Analyze this workflow for any logical errors, missing connections, or potential runtime issues.",
+        tip: "Tip",
+        emptyWorkflow: "Workflow is empty.",
+        emptyWorkflowSub: "Ask the AI to create one!",
+        noInputs: "No inputs required",
+        outputs: "OUTPUTS",
+        values: "VALUES",
+        danglingNode: "seems isolated.",
+        danglingFix: "Ensure this node is part of the execution flow.",
+        missingLink: "has unconnected input",
+        missingLinkFix: "Connect this input or add a primitive node.",
+
+        // JSON Editing
+        editJson: "Edit JSON",
+        saveChanges: "Save Changes",
+        cancelEdit: "Cancel",
+        editWarningTitle: "Warning: Advanced Editing",
+        editWarningText: "Directly editing the JSON can break your workflow. We will create a checkpoint before saving, but please proceed with caution.",
+        confirmEdit: "I Understand, Edit",
+        checkpoints: "History / Checkpoints",
+        restore: "Restore",
+        restoreConfirm: "Restore this version?",
+        invalidJsonTitle: "Invalid JSON Detected",
+        invalidJsonText: "The JSON formatting is incorrect and cannot be parsed.",
+        askAiFix: "Ask AI to Fix",
+        checkpointSaved: "Checkpoint saved",
+
+        // Settings
+        settingsTitle: "Model Configuration",
+        settingsSave: "Save Configuration",
+        settingsCancel: "Cancel",
+        provider: "AI Provider",
+        googleGemini: "Google Gemini",
+        customLocal: "Custom / Local",
+        apiKey: "API Key",
+        apiKeyOptional: "API Key (Optional for some local models)",
+        modelName: "Model Name",
+        modelNamePlaceholder: "Enter model ID",
+        modelHintGoogle: "Recommended: gemini-2.5-flash",
+        modelHintCustom: "Enter the model ID available on your server.",
+        baseUrl: "Base URL",
+        corsWarning: "For local servers (Ollama/LM Studio), ensure you have enabled CORS.",
+        language: "Language",
+        setupRequired: "Setup Required",
+        aiDisclaimer: "AI can search the web for latest nodes. Review changes carefully."
+    },
+    zh: {
+        appName: "Comfy 工作流智能体",
+        appSubtitle: "AI 工作流架构师",
+        welcome: "你好！我是你的 Comfy 工作流智能体。我可以帮你搜索自定义节点，修复错误，以及搭建工作流。",
+        inputPlaceholder: "例如：'添加一个 ControlNet 节点' 或 '搜索 IPAdapter 安装方法'",
+        thinking: "思考与搜索中...",
+        groundingSources: "知识库来源",
+        missingNodes: "可能缺失的节点",
+        suggestedActions: "建议操作",
+        workflowUpdated: "工作流已自动更新",
+        
+        managerTitle: "工作流管理器",
+        copyJson: "复制 JSON",
+        exportJson: "导出 JSON",
+        copied: "已复制",
+        tabOverview: "概览",
+        tabDiagnostics: "诊断",
+        tabJson: "JSON 数据",
+        statNodes: "节点",
+        statLinks: "连接",
+        statIssues: "问题",
+        workflowHealth: "工作流健康度",
+        noIssues: "未检测到活动问题。",
+        startDiagnosis: "运行诊断",
+        diagnoseWithAi: "使用 AI 诊断",
+        diagnosePrompt: "分析此工作流是否存在逻辑错误、缺失连接或潜在的运行时问题。",
+        tip: "提示",
+        emptyWorkflow: "工作流为空。",
+        emptyWorkflowSub: "请让 AI 帮你创建一个！",
+        noInputs: "无需输入",
+        outputs: "输出",
+        values: "值",
+        danglingNode: "似乎是孤立的。",
+        danglingFix: "确保此节点是执行流程的一部分。",
+        missingLink: "有未连接的输入",
+        missingLinkFix: "连接此输入或添加基本节点。",
+
+        // JSON Editing
+        editJson: "编辑 JSON",
+        saveChanges: "保存修改",
+        cancelEdit: "取消",
+        editWarningTitle: "警告：高级编辑模式",
+        editWarningText: "直接编辑 JSON 可能会导致工作流损坏。保存前我们会创建一个检查点，但请谨慎操作。",
+        confirmEdit: "我明白，开始编辑",
+        checkpoints: "历史记录 / 检查点",
+        restore: "恢复",
+        restoreConfirm: "恢复此版本？",
+        invalidJsonTitle: "检测到无效 JSON",
+        invalidJsonText: "JSON 格式错误，无法解析。",
+        askAiFix: "让 AI 修复",
+        checkpointSaved: "检查点已保存",
+
+        settingsTitle: "模型配置",
+        settingsSave: "保存配置",
+        settingsCancel: "取消",
+        provider: "AI 提供商",
+        googleGemini: "Google Gemini",
+        customLocal: "自定义 / 本地",
+        apiKey: "API 密钥",
+        apiKeyOptional: "API 密钥 (部分本地模型可选)",
+        modelName: "模型名称",
+        modelNamePlaceholder: "输入模型 ID",
+        modelHintGoogle: "推荐: gemini-2.5-flash",
+        modelHintCustom: "输入服务器上可用的模型 ID。",
+        baseUrl: "基础 URL (Base URL)",
+        corsWarning: "对于本地服务器 (Ollama/LM Studio)，请确保已启用 CORS。",
+        language: "语言 (Language)",
+        setupRequired: "需要设置",
+        aiDisclaimer: "AI 可以搜索网络上的最新节点。请仔细检查更改。"
+    },
+    ja: {
+        appName: "Comfy ワークフローエージェント",
+        appSubtitle: "AI ワークフローアーキテクト",
+        welcome: "こんにちは！Comfy ワークフローエージェントです。カスタムノードの検索、エラー修正、ワークフロー作成をお手伝いします。",
+        inputPlaceholder: "例: 'ControlNetノードを追加して' または 'IPAdapterのインストール方法を検索'",
+        thinking: "思考中 & 検索中...",
+        groundingSources: "知識ベースのソース",
+        missingNodes: "不足している可能性のあるノード",
+        suggestedActions: "提案されたアクション",
+        workflowUpdated: "ワークフローが自動更新されました",
+        
+        managerTitle: "ワークフロー管理",
+        copyJson: "JSONをコピー",
+        exportJson: "JSONをエクスポート",
+        copied: "コピー完了",
+        tabOverview: "概要",
+        tabDiagnostics: "診断",
+        tabJson: "JSON データ",
+        statNodes: "ノード",
+        statLinks: "リンク",
+        statIssues: "問題",
+        workflowHealth: "ワークフローの健全性",
+        noIssues: "アクティブな問題は検出されませんでした。",
+        startDiagnosis: "診断を実行",
+        diagnoseWithAi: "AIで診断",
+        diagnosePrompt: "このワークフローの論理エラー、接続の欠落、または潜在的な実行時の問題を分析してください。",
+        tip: "ヒント",
+        emptyWorkflow: "ワークフローは空です。",
+        emptyWorkflowSub: "AIに作成を依頼してください！",
+        noInputs: "入力不要",
+        outputs: "出力",
+        values: "値",
+        danglingNode: "孤立しているようです。",
+        danglingFix: "このノードが実行フローの一部であることを確認してください。",
+        missingLink: "未接続の入力があります",
+        missingLinkFix: "この入力を接続するか、プリミティブノードを追加してください。",
+
+        // JSON Editing
+        editJson: "JSONを編集",
+        saveChanges: "変更を保存",
+        cancelEdit: "キャンセル",
+        editWarningTitle: "警告：高度な編集",
+        editWarningText: "JSONを直接編集すると、ワークフローが破損する可能性があります。保存する前にチェックポイントを作成しますが、注意して進めてください。",
+        confirmEdit: "理解しました、編集します",
+        checkpoints: "履歴 / チェックポイント",
+        restore: "復元",
+        restoreConfirm: "このバージョンを復元しますか？",
+        invalidJsonTitle: "無効なJSON",
+        invalidJsonText: "JSON形式が正しくないため解析できません。",
+        askAiFix: "AIに修正を依頼",
+        checkpointSaved: "チェックポイント保存完了",
+
+        settingsTitle: "モデル設定",
+        settingsSave: "設定を保存",
+        settingsCancel: "キャンセル",
+        provider: "AI プロバイダー",
+        googleGemini: "Google Gemini",
+        customLocal: "カスタム / ローカル",
+        apiKey: "API キー",
+        apiKeyOptional: "API キー (一部のローカルモデルでは任意)",
+        modelName: "モデル名",
+        modelNamePlaceholder: "モデルIDを入力",
+        modelHintGoogle: "推奨: gemini-2.5-flash",
+        modelHintCustom: "サーバーで利用可能なモデルIDを入力してください。",
+        baseUrl: "ベース URL",
+        corsWarning: "ローカルサーバー (Ollama/LM Studio) の場合、CORSが有効になっていることを確認してください。",
+        language: "言語 (Language)",
+        setupRequired: "設定が必要です",
+        aiDisclaimer: "AIはWebで最新のノードを検索できます。変更を注意深く確認してください。"
+    },
+    ko: {
+        appName: "Comfy 워크플로우 에이전트",
+        appSubtitle: "AI 워크플로우 설계자",
+        welcome: "안녕하세요! Comfy 워크플로우 에이전트입니다. 커스텀 노드 검색, 오류 수정, 워크플로우 구축을 도와드릴 수 있습니다.",
+        inputPlaceholder: "예: 'ControlNet 노드 추가해줘' 또는 'IPAdapter 설치 방법 검색'",
+        thinking: "생각 및 검색 중...",
+        groundingSources: "지식 베이스 출처",
+        missingNodes: "누락된 노드 가능성",
+        suggestedActions: "제안된 작업",
+        workflowUpdated: "워크플로우가 자동으로 업데이트되었습니다",
+        
+        managerTitle: "워크플로우 관리자",
+        copyJson: "JSON 복사",
+        exportJson: "JSON 내보내기",
+        copied: "복사됨",
+        tabOverview: "개요",
+        tabDiagnostics: "진단",
+        tabJson: "JSON 데이터",
+        statNodes: "노드",
+        statLinks: "링크",
+        statIssues: "문제",
+        workflowHealth: "워크플로우 상태",
+        noIssues: "활성 문제가 감지되지 않았습니다.",
+        startDiagnosis: "진단 실행",
+        diagnoseWithAi: "AI로 진단",
+        diagnosePrompt: "이 워크플로우의 논리적 오류, 누락된 연결 또는 잠재적인 런타임 문제를 분석하십시오.",
+        tip: "팁",
+        emptyWorkflow: "워크플로우가 비어 있습니다.",
+        emptyWorkflowSub: "AI에게 생성을 요청하세요!",
+        noInputs: "입력 필요 없음",
+        outputs: "출력",
+        values: "값",
+        danglingNode: "고립된 것 같습니다.",
+        danglingFix: "이 노드가 실행 흐름의 일부인지 확인하세요.",
+        missingLink: "연결되지 않은 입력이 있습니다",
+        missingLinkFix: "이 입력을 연결하거나 기본 노드를 추가하세요.",
+
+        // JSON Editing
+        editJson: "JSON 편집",
+        saveChanges: "변경 사항 저장",
+        cancelEdit: "취소",
+        editWarningTitle: "경고: 고급 편집",
+        editWarningText: "JSON을 직접 편집하면 워크플로우가 손상될 수 있습니다. 저장하기 전에 체크포인트를 생성하지만 주의해서 진행하십시오.",
+        confirmEdit: "이해했습니다, 편집",
+        checkpoints: "기록 / 체크포인트",
+        restore: "복원",
+        restoreConfirm: "이 버전을 복원하시겠습니까?",
+        invalidJsonTitle: "잘못된 JSON",
+        invalidJsonText: "JSON 형식이 올바르지 않아 파싱할 수 없습니다.",
+        askAiFix: "AI에게 수정 요청",
+        checkpointSaved: "체크포인트 저장됨",
+
+        settingsTitle: "모델 구성",
+        settingsSave: "구성 저장",
+        settingsCancel: "취소",
+        provider: "AI 제공자",
+        googleGemini: "Google Gemini",
+        customLocal: "사용자 지정 / 로컬",
+        apiKey: "API 키",
+        apiKeyOptional: "API 키 (일부 로컬 모델의 경우 선택 사항)",
+        modelName: "모델 이름",
+        modelNamePlaceholder: "모델 ID 입력",
+        modelHintGoogle: "권장: gemini-2.5-flash",
+        modelHintCustom: "서버에서 사용 가능한 모델 ID를 입력하세요.",
+        baseUrl: "기본 URL (Base URL)",
+        corsWarning: "로컬 서버 (Ollama/LM Studio)의 경우 CORS가 활성화되어 있는지 확인하세요.",
+        language: "언어 (Language)",
+        setupRequired: "설정 필요",
+        aiDisclaimer: "AI는 웹에서 최신 노드를 검색할 수 있습니다. 변경 사항을 주의 깊게 검토하세요."
     }
-  }
-}
+};
 
-// Initialize i18next
-void i18n
-  // Load translations via http backend (must be first!)
-  .use(Backend)
-  // Detect user language
-  .use(LanguageDetector)
-  // Initialize react-i18next
-  .use(initReactI18next)
-  // Initialize i18next
-  .init({
-    // Always enable debug mode to see what's happening
-    debug: true,
-
-    // Fallback language
-    fallbackLng: 'en',
-
-    // Namespace for translations
-    ns: ['main'],
-    defaultNS: 'main',
-
-    // Do not load from bundled resources first
-    initImmediate: true,
-
-    // Custom handling for missing keys
-    saveMissing: true,
-    missingKeyHandler: (lng, ns, key) => {
-      console.log(`Missing translation: [${lng}] ${ns}:${key}`)
-    },
-
-    // Language detection configuration
-    detection: {
-      // Order of detection methods
-      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
-      // Don't cache detected language
-      caches: []
-    },
-
-    // Backend configuration
-    backend: {
-      // Path to load translations from
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
-      // Add retry logic
-      requestOptions: {
-        retry: 3,
-        timeout: 3000
-      }
-    },
-
-    // React specific options
-    react: {
-      useSuspense: true
-    },
-
-    // Allow string formatting for dynamic values
-    interpolation: {
-      escapeValue: false // Not needed for React as it escapes by default
-    }
-  })
-
-// Add fallback resources only if HTTP loading fails
-i18n.on('failedLoading', (lng, ns) => {
-  console.log(
-    `Failed loading translation file for ${lng} and ${ns}, using fallback`
-  )
-
-  // Add the fallback resources for this language
-  if (fallbackResources[lng] && fallbackResources[lng][ns]) {
-    i18n.addResourceBundle(lng, ns, fallbackResources[lng][ns], true, true)
-  }
-})
-
-export default i18n
+export const t = (lang: Language, key: string): string => {
+    return translations[lang]?.[key] || translations['en'][key] || key;
+};
